@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research on Artwork: Edgar Degas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 80px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-content {
+            max-width: 45%;
+            z-index: 2;
+        }
+
+        .slide-image {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 1.2s ease;
+        }
+
+        .slide.active .slide-image {
+            transform: scale(1.05);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* Title Slide */
+        .slide-title {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .slide-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .slide-title .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #ccc;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .slide-title .line {
+            width: 80px;
+            height: 2px;
+            background: #fff;
+            margin: 30px 0;
+        }
+
+        /* Section Slides */
+        .slide-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .slide-section h3 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+
+        /* Content Slides */
+        .slide-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+
+        .slide-content h3 {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+
+        .slide-content p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: #ddd;
+            max-width: 90%;
+        }
+
+        .slide-content ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .slide-content li {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.9;
+            color: #ccc;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .slide-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background: #888;
+            border-radius: 50%;
+        }
+
+        /* Navigation */
+        .nav-dots {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover {
+            background: rgba(255,255,255,0.6);
+        }
+
+        .nav-dot.active {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            background: transparent;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        /* Specific slide backgrounds */
+        .bg-title {
+            background: linear-gradient(135deg, #0a0a0a 0%, #151515 50%, #0a0a0a 100%);
+        }
+
+        .bg-artist {
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+        }
+
+        .bg-artwork {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Edgar_Degas_-_La_Classe_de_danse.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-analysis {
+            background-image: url('https://images.metmuseum.org/CRDImages/ep/original/DP-20101-001.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-medium {
+            background-image: url('https://blobcdn.nelson-atkins.org/wpmediablob/FPC/img/Impressionism/614_F73-30_Degas_Rehearsal-of-the-Ballet/614.t06_F73-30_Degas_Rehearsal-of-the-Ballet_Detail-t06.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-subject {
+            background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/3-ballet-dancers-rehearsing-edgar-degas.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-interpretation {
+            background-image: url('https://blobcdn.nelson-atkins.org/wpmediablob/FPC/img/Impressionism/614_F73-30_Degas_Rehearsal-of-the-Ballet/614.t03_F73-30_Degas_Rehearsal-of-the-Ballet_Detail-t03.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-conclusion {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 50%, #0a0a0a 100%);
+        }
+
+        /* Refined footnote style */
+        .footnote {
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        /* Key points highlight */
+        .highlight {
+            color: #fff;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide slide-title active" data-slide="1">
+            <div class="slide-content">
+                <h1>Edgar Degas</h1>
+                <div class="line"></div>
+                <p class="subtitle">Research on Artwork: The Ballet Class</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Artist -->
+        <div class="slide slide-section bg-artist" data-slide="2">
+            <div class="slide-content">
+                <h3>01</h3>
+                <h2>The Artist</h2>
+                <p>French Impressionist known for his revolutionary approach to capturing movement and everyday subjects.</p>
+                <ul>
+                    <li>Born 1834, Paris — from aristocratic background</li>
+                    <li>Originally trained in classical academic painting</li>
+                    <li>Rejected traditional Salon exhibition in 1874</li>
+                    <li>Became founding member of Impressionist movement</li>
+                </ul>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 3: The Artwork Introduction -->
+        <div class="slide bg-artwork" data-slide="3">
+            <div class="slide-content">
+                <h3>02</h3>
+                <h2>The Artwork</h2>
+                <p class="highlight">La Classe de Danse (The Ballet Class), 1874</p>
+                <p>Oil on canvas, 85 x 75 cm. Held at the Metropolitan Museum of Art, New York.</p>
+                <p style="margin-top: 20px; font-size: 0.9rem; color: #999;">One of Degas's most celebrated depictions of ballet life behind the scenes.</p>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 4: Formal Analysis -->
+        <div class="slide bg-analysis" data-slide="4">
+            <div class="slide-content">
+                <h3>03</h3>
+                <h2>Formal Analysis</h2>
+                <p class="highlight">The "Keyhole" Perspective</p>
+                <ul>
+                    <li>Viewer positioned as unseen observer from behind</li>
+                    <li>Creates sense of spying on private moment</li>
+                    <li>Dancer positioned centrally — focal point</li>
+                    <li>Off-center composition challenges tradition</li>
+                </ul>
+                <p class="footnote">* The unusual vantage point draws viewers into the rehearsal space.</p>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 5: Medium & Technique -->
+        <div class="slide bg-medium" data-slide="5">
+            <div class="slide-content">
+                <h3>04</h3>
+                <h2>Medium & Technique</h2>
+                <p>Oil paint applied with remarkable spontaneity to mimic rapid sketches.</p>
+                <ul>
+                    <li>Visible brushstrokes suggest movement and energy</li>
+                    <li>Loose handling in background contrasts with detailed foreground</li>
+                    <li>Influenced by photography — candid, unplanned feel</li>
+                    <li>Blurred edges create sense of passing time</li>
+                </ul>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 6: The Subject -->
+        <div class="slide bg-subject" data-slide="6">
+            <div class="slide-content">
+                <h3>05</h3>
+                <h2>The Subject</h2>
+                <p class="highlight">Ballet Rehearsals — The Unseen Reality</p>
+                <ul>
+                    <li>Degas fascinated by discipline and labor of dancers</li>
+                    <li>Shows exhaustion, not glamour</li>
+                    <li>Exposes the rigorous training behind performance</li>
+                    <li>Championed "ordinary" subjects in fine art</li>
+                </ul>
+                <p class="footnote">* Unlike romanticized portrayals, Degas revealed the athlete's dedication.</p>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 7: Personal Interpretation -->
+        <div class="slide bg-interpretation" data-slide="7">
+            <div class="slide-content">
+                <h3>06</h3>
+                <h2>Personal Interpretation</h2>
+                <p class="highlight">Emotional Response</p>
+                <ul>
+                    <li>The dim lighting evokes quiet contemplation</li>
+                    <li>Subtle melancholy beneath apparent industriousness</li>
+                    <li>I sense respect for these young artists' commitment</li>
+                    <li>The painting invites reflection on unseen effort</li>
+                </ul>
+            </div>
+            <div class="slide-overlay"></div>
+        </div>
+
+        <!-- Slide 8: Conclusion -->
+        <div class="slide slide-section bg-conclusion" data-slide="8">
+            <div class="slide-content">
+                <h3>07</h3>
+                <h2>Conclusion</h2>
+                <p class="highlight">Degas's Enduring Legacy</p>
+                <ul>
+                    <li>Pioneered observation of modern urban life</li>
+                    <li>Influenced 20th-century photography and cinema</li>
+                    <li>Changed how motion could be depicted in painting</li>
+                    <li>His honest approach inspired countless artists</li>
+                </ul>
+                <p class="footnote" style="margin-top: 30px;">Edgar Degas transformed art by finding beauty in everyday dedication.</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-dots">
+            <div class="nav-dot active" data-goto="1"></div>
+            <div class="nav-dot" data-goto="2"></div>
+            <div class="nav-dot" data-goto="3"></div>
+            <div class="nav-dot" data-goto="4"></div>
+            <div class="nav-dot" data-goto="5"></div>
+            <div class="nav-dot" data-goto="6"></div>
+            <div class="nav-dot" data-goto="7"></div>
+            <div class="nav-dot" data-goto="8"></div>
+        </div>
+
+        <div class="nav-arrows">
+            <button class="nav-arrow" id="prevBtn">←</button>
+            <button class="nav-arrow" id="nextBtn">→</button>
+        </div>
+
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentSlideEl = document.getElementById('currentSlide');
+        const totalSlidesEl = document.getElementById('totalSlides');
+
+        let currentSlide = 1;
+        const totalSlides = slides.length;
+
+        totalSlidesEl.textContent = totalSlides;
+
+        function showSlide(n) {
+            if (n < 1) n = totalSlides;
+            if (n > totalSlides) n = 1;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            document.querySelector(`[data-slide="${n}"]`).classList.add('active');
+            dots[n - 1].classList.add('active');
+
+            currentSlide = n;
+            currentSlideEl.textContent = n;
+        }
+
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(parseInt(dot.dataset.goto));
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            }
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                showSlide(currentSlide + 1);
+            } else if (touchEndX - touchStartX > 50) {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
