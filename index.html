@@ -2,509 +2,753 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research on Artwork: Edgar Degas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sunnah Path | Daily Sunnah Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-deep:     #0c1f1b;
+            --bg-mid:      #122820;
+            --bg-card:     rgba(255,255,255,0.055);
+            --gold:        #d4af37;
+            --gold-soft:   rgba(212,175,55,0.18);
+            --gold-border: rgba(212,175,55,0.28);
+            --green-light: #b8d4ae;
+            --text:        #f0ece0;
+            --text-muted:  #8fa889;
+            --radius-card: 22px;
+            --radius-pill: 50px;
+            --shadow:      0 8px 40px rgba(0,0,0,0.35);
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #000;
-            color: #fff;
-            overflow: hidden;
-            height: 100vh;
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(30,80,60,0.45) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(212,175,55,0.06) 0%, transparent 55%);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
         }
 
-        .presentation {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+        /* ── HEADER ──────────────────────────────────────── */
+        .header {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 28px 28px 0;
             display: flex;
             align-items: center;
-            padding: 80px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
         }
-
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
+        .header-brand { display:flex; align-items:center; gap:14px; }
+        .brand-icon {
+            width:52px; height:52px; background:var(--gold-soft);
+            border:1px solid var(--gold-border); border-radius:14px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.4rem; color:var(--gold);
         }
-
-        .slide-content {
-            max-width: 45%;
-            z-index: 2;
-        }
-
-        .slide-image {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 55%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: transform 1.2s ease;
-        }
-
-        .slide.active .slide-image {
-            transform: scale(1.05);
-        }
-
-        .slide-overlay {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 55%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.3) 100%);
-            pointer-events: none;
-        }
-
-        /* Title Slide */
-        .slide-title {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-        }
-
-        .slide-title h1 {
+        .brand-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            line-height: 1.2;
+            font-size:1.7rem; font-weight:700; letter-spacing:0.01em;
+        }
+        .brand-text p { font-size:0.8rem; color:var(--text-muted); margin-top:2px; }
+
+        .header-stats {
+            display:flex; gap:12px;
+        }
+        .stat-pill {
+            background:var(--gold-soft); border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill); padding:8px 18px;
+            font-size:0.78rem; font-weight:600; color:var(--gold);
+            display:flex; align-items:center; gap:7px;
         }
 
-        .slide-title .subtitle {
-            font-size: 1.4rem;
-            font-weight: 300;
-            color: #ccc;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+        /* ── SEARCH ──────────────────────────────────────── */
+        .search-wrap {
+            max-width:1300px; margin:28px auto 0; padding:0 28px;
+        }
+        .search-box {
+            background:rgba(255,255,255,0.07);
+            border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill);
+            display:flex; align-items:center; gap:14px;
+            padding:0 22px; transition:border-color .25s, box-shadow .25s;
+        }
+        .search-box:focus-within {
+            border-color:var(--gold);
+            box-shadow:0 0 0 3px rgba(212,175,55,0.12);
+        }
+        .search-box i { color:var(--gold); font-size:1rem; }
+        .search-box input {
+            flex:1; background:none; border:none; outline:none;
+            padding:15px 0; color:var(--text); font-size:0.95rem;
+            font-family:'DM Sans',sans-serif;
+        }
+        .search-box input::placeholder { color:var(--text-muted); }
+        #clearSearch {
+            background:none; border:none; color:var(--text-muted);
+            cursor:pointer; padding:4px; display:none; font-size:0.85rem;
+            transition:color .2s;
+        }
+        #clearSearch:hover { color:var(--gold); }
+
+        /* ── CATEGORIES ──────────────────────────────────── */
+        .cats-wrap {
+            max-width:1300px; margin:20px auto 0; padding:0 28px;
+            display:flex; gap:10px; overflow-x:auto; padding-bottom:4px;
+            scrollbar-width:none;
+        }
+        .cats-wrap::-webkit-scrollbar { display:none; }
+        .cat-btn {
+            background:rgba(255,255,255,0.06);
+            border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill); padding:10px 20px;
+            color:var(--text); font-size:0.82rem; font-weight:500;
+            cursor:pointer; white-space:nowrap;
+            transition:all .22s; display:flex; align-items:center; gap:8px;
+            font-family:'DM Sans',sans-serif;
+        }
+        .cat-btn i { color:var(--gold); font-size:0.85rem; }
+        .cat-btn:hover { background:var(--gold-soft); border-color:var(--gold); }
+        .cat-btn.active {
+            background:var(--gold); border-color:var(--gold);
+            color:#0c1f1b; font-weight:600;
+        }
+        .cat-btn.active i { color:#0c1f1b; }
+
+        /* ── GRID ────────────────────────────────────────── */
+        .grid-wrap {
+            max-width:1300px; margin:28px auto 0; padding:0 28px 60px;
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(360px, 1fr));
+            gap:22px;
         }
 
-        .slide-title .line {
-            width: 80px;
-            height: 2px;
-            background: #fff;
-            margin: 30px 0;
+        /* ── CARD ────────────────────────────────────────── */
+        .card {
+            background:var(--bg-card);
+            border:1px solid rgba(255,255,255,0.07);
+            border-radius:var(--radius-card);
+            padding:22px;
+            transition:transform .25s, border-color .25s, box-shadow .25s;
+            position:relative; overflow:hidden;
+        }
+        .card::before {
+            content:''; position:absolute; inset:0;
+            border-radius:var(--radius-card);
+            background:linear-gradient(135deg,rgba(212,175,55,0.04),transparent 60%);
+            pointer-events:none;
+        }
+        .card:hover {
+            transform:translateY(-4px);
+            border-color:var(--gold-border);
+            box-shadow:var(--shadow);
         }
 
-        /* Section Slides */
-        .slide-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 400;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+        .card-top {
+            display:flex; justify-content:space-between;
+            align-items:center; margin-bottom:14px;
+        }
+        .cat-tag {
+            background:var(--gold-soft); border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill); padding:4px 13px;
+            font-size:0.72rem; font-weight:600; color:var(--gold);
+            display:flex; align-items:center; gap:6px;
+        }
+        .card-actions { display:flex; gap:8px; }
+        .icon-btn {
+            width:34px; height:34px; border-radius:50%;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.1);
+            color:var(--gold); cursor:pointer; font-size:0.8rem;
+            display:flex; align-items:center; justify-content:center;
+            transition:all .2s;
+        }
+        .icon-btn:hover { background:var(--gold); color:#0c1f1b; border-color:var(--gold); transform:scale(1.08); }
+
+        .card-title {
+            font-family:'Playfair Display', serif;
+            font-size:1.2rem; font-weight:600; color:#fff;
+            margin-bottom:9px; line-height:1.3;
+        }
+        .card-desc {
+            font-size:0.88rem; color:var(--text-muted);
+            line-height:1.65; margin-bottom:16px;
         }
 
-        .slide-section h3 {
-            font-size: 1.1rem;
-            font-weight: 300;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 40px;
+        /* ── DUA BOX ─────────────────────────────────────── */
+        .dua-box {
+            background:rgba(212,175,55,0.06);
+            border:1px solid var(--gold-border);
+            border-radius:14px; padding:16px;
+        }
+        .dua-arabic {
+            font-family:'Amiri', serif;
+            font-size:1.25rem; line-height:2;
+            direction:rtl; text-align:right;
+            color:#fff; margin-bottom:10px;
+        }
+        .dua-trans {
+            font-size:0.8rem; color:var(--text-muted);
+            font-style:italic; line-height:1.5; margin-bottom:14px;
+        }
+        .dua-btns { display:flex; gap:8px; flex-wrap:wrap; }
+        .dua-btn {
+            background:rgba(212,175,55,0.12);
+            border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill);
+            padding:6px 14px; font-size:0.75rem; font-weight:500;
+            color:var(--gold); cursor:pointer;
+            display:flex; align-items:center; gap:6px;
+            transition:all .2s; font-family:'DM Sans',sans-serif;
+        }
+        .dua-btn:hover { background:var(--gold); color:#0c1f1b; border-color:var(--gold); }
+        .dua-btn:active { transform:scale(0.96); }
+        .dua-btn.playing { background:var(--gold); color:#0c1f1b; border-color:var(--gold); }
+        .dua-btn .spin { animation:spin .7s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        .card-reward {
+            margin-top:12px; font-size:0.73rem; color:var(--gold);
+            display:flex; align-items:center; gap:6px;
         }
 
-        /* Content Slides */
-        .slide-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 400;
-            margin-bottom: 10px;
-            color: #f0f0f0;
+        /* ── TOAST ───────────────────────────────────────── */
+        #toast {
+            position:fixed; bottom:28px; right:28px;
+            background:var(--gold); color:#0c1f1b;
+            padding:11px 22px; border-radius:var(--radius-pill);
+            font-size:0.85rem; font-weight:600;
+            display:none; align-items:center; gap:9px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.3);
+            animation:slideUp .3s ease; z-index:9999;
+        }
+        @keyframes slideUp {
+            from { transform:translateY(20px); opacity:0; }
+            to   { transform:translateY(0);    opacity:1; }
         }
 
-        .slide-content h3 {
-            font-size: 0.95rem;
-            font-weight: 400;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 30px;
+        /* ── NOW PLAYING BAR ─────────────────────────────── */
+        #nowPlaying {
+            position:fixed; bottom:28px; left:28px;
+            background:rgba(12,31,27,0.95);
+            backdrop-filter:blur(12px);
+            border:1px solid var(--gold-border);
+            border-radius:var(--radius-pill);
+            padding:10px 18px; display:none; align-items:center; gap:12px;
+            font-size:0.82rem; color:var(--gold); z-index:9999;
+            box-shadow:var(--shadow);
+        }
+        #nowPlaying .pulse {
+            width:8px; height:8px; border-radius:50%; background:var(--gold);
+            animation:pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50%      { opacity:.4; transform:scale(0.7); }
+        }
+        .stop-now { background:none; border:none; color:var(--text-muted);
+            cursor:pointer; font-size:0.9rem; padding:2px 4px;
+            transition:color .2s; }
+        .stop-now:hover { color:#ff6b6b; }
+
+        /* ── FOOTER QUOTE ────────────────────────────────── */
+        .quote-bar {
+            max-width:1300px; margin:0 auto; padding:0 28px 60px;
+        }
+        .quote-inner {
+            background:var(--gold-soft); border:1px solid var(--gold-border);
+            border-radius:var(--radius-card); padding:24px 30px;
+            text-align:center;
+        }
+        .quote-inner .qi { color:var(--gold); font-size:1.3rem; margin-bottom:10px; }
+        .quote-inner p { font-family:'Playfair Display',serif; font-size:1rem; line-height:1.7; }
+        .quote-inner small { color:var(--text-muted); font-size:0.8rem; margin-top:6px; display:block; }
+
+        /* ── VOICE STATUS BANNER ─────────────────────────── */
+        #voiceBanner {
+            max-width:1300px; margin:14px auto 0; padding:0 28px;
+            display:none;
+        }
+        .voice-note {
+            background:rgba(212,175,55,0.08); border:1px solid var(--gold-border);
+            border-radius:12px; padding:10px 16px;
+            font-size:0.78rem; color:var(--text-muted);
+            display:flex; align-items:center; gap:10px;
+        }
+        .voice-note i { color:var(--gold); }
+
+        /* ── RESPONSIVE ──────────────────────────────────── */
+        @media (max-width:680px) {
+            .header { padding:20px 16px 0; }
+            .search-wrap, .cats-wrap, .grid-wrap, .quote-bar { padding-left:16px; padding-right:16px; }
+            .grid-wrap { grid-template-columns:1fr; }
+            .header-stats { display:none; }
+            #toast { right:16px; bottom:16px; }
+            #nowPlaying { left:16px; bottom:16px; }
         }
 
-        .slide-content p {
-            font-size: 1.15rem;
-            font-weight: 300;
-            line-height: 1.8;
-            color: #ddd;
-            max-width: 90%;
+        .empty {
+            grid-column:1/-1; text-align:center;
+            padding:60px 20px; color:var(--text-muted);
         }
-
-        .slide-content ul {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .slide-content li {
-            font-size: 1.1rem;
-            font-weight: 300;
-            line-height: 1.9;
-            color: #ccc;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .slide-content li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 4px;
-            background: #888;
-            border-radius: 50%;
-        }
-
-        /* Navigation */
-        .nav-dots {
-            position: fixed;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 100;
-        }
-
-        .nav-dot {
-            width: 8px;
-            height: 8px;
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-dot:hover {
-            background: rgba(255,255,255,0.6);
-        }
-
-        .nav-dot.active {
-            background: #fff;
-            border-color: #fff;
-        }
-
-        .nav-arrows {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 100;
-        }
-
-        .nav-arrow {
-            width: 50px;
-            height: 50px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            background: transparent;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-arrow:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #fff;
-        }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: #666;
-            letter-spacing: 2px;
-        }
-
-        /* Specific slide backgrounds */
-        .bg-title {
-            background: linear-gradient(135deg, #0a0a0a 0%, #151515 50%, #0a0a0a 100%);
-        }
-
-        .bg-artist {
-            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
-        }
-
-        .bg-artwork {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Edgar_Degas_-_La_Classe_de_danse.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-analysis {
-            background-image: url('https://images.metmuseum.org/CRDImages/ep/original/DP-20101-001.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-medium {
-            background-image: url('https://blobcdn.nelson-atkins.org/wpmediablob/FPC/img/Impressionism/614_F73-30_Degas_Rehearsal-of-the-Ballet/614.t06_F73-30_Degas_Rehearsal-of-the-Ballet_Detail-t06.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-subject {
-            background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/3-ballet-dancers-rehearsing-edgar-degas.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-interpretation {
-            background-image: url('https://blobcdn.nelson-atkins.org/wpmediablob/FPC/img/Impressionism/614_F73-30_Degas_Rehearsal-of-the-Ballet/614.t03_F73-30_Degas_Rehearsal-of-the-Ballet_Detail-t03.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-conclusion {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 50%, #0a0a0a 100%);
-        }
-
-        /* Refined footnote style */
-        .footnote {
-            font-size: 0.8rem;
-            color: #555;
-            margin-top: 40px;
-            font-style: italic;
-        }
-
-        /* Key points highlight */
-        .highlight {
-            color: #fff;
-            font-weight: 400;
-        }
+        .empty i { font-size:2.5rem; margin-bottom:14px; display:block; color:var(--gold-border); }
     </style>
 </head>
 <body>
-    <div class="presentation">
-        <!-- Slide 1: Title -->
-        <div class="slide slide-title active" data-slide="1">
-            <div class="slide-content">
-                <h1>Edgar Degas</h1>
-                <div class="line"></div>
-                <p class="subtitle">Research on Artwork: The Ballet Class</p>
-            </div>
-        </div>
 
-        <!-- Slide 2: The Artist -->
-        <div class="slide slide-section bg-artist" data-slide="2">
-            <div class="slide-content">
-                <h3>01</h3>
-                <h2>The Artist</h2>
-                <p>French Impressionist known for his revolutionary approach to capturing movement and everyday subjects.</p>
-                <ul>
-                    <li>Born 1834, Paris — from aristocratic background</li>
-                    <li>Originally trained in classical academic painting</li>
-                    <li>Rejected traditional Salon exhibition in 1874</li>
-                    <li>Became founding member of Impressionist movement</li>
-                </ul>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 3: The Artwork Introduction -->
-        <div class="slide bg-artwork" data-slide="3">
-            <div class="slide-content">
-                <h3>02</h3>
-                <h2>The Artwork</h2>
-                <p class="highlight">La Classe de Danse (The Ballet Class), 1874</p>
-                <p>Oil on canvas, 85 x 75 cm. Held at the Metropolitan Museum of Art, New York.</p>
-                <p style="margin-top: 20px; font-size: 0.9rem; color: #999;">One of Degas's most celebrated depictions of ballet life behind the scenes.</p>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 4: Formal Analysis -->
-        <div class="slide bg-analysis" data-slide="4">
-            <div class="slide-content">
-                <h3>03</h3>
-                <h2>Formal Analysis</h2>
-                <p class="highlight">The "Keyhole" Perspective</p>
-                <ul>
-                    <li>Viewer positioned as unseen observer from behind</li>
-                    <li>Creates sense of spying on private moment</li>
-                    <li>Dancer positioned centrally — focal point</li>
-                    <li>Off-center composition challenges tradition</li>
-                </ul>
-                <p class="footnote">* The unusual vantage point draws viewers into the rehearsal space.</p>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 5: Medium & Technique -->
-        <div class="slide bg-medium" data-slide="5">
-            <div class="slide-content">
-                <h3>04</h3>
-                <h2>Medium & Technique</h2>
-                <p>Oil paint applied with remarkable spontaneity to mimic rapid sketches.</p>
-                <ul>
-                    <li>Visible brushstrokes suggest movement and energy</li>
-                    <li>Loose handling in background contrasts with detailed foreground</li>
-                    <li>Influenced by photography — candid, unplanned feel</li>
-                    <li>Blurred edges create sense of passing time</li>
-                </ul>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 6: The Subject -->
-        <div class="slide bg-subject" data-slide="6">
-            <div class="slide-content">
-                <h3>05</h3>
-                <h2>The Subject</h2>
-                <p class="highlight">Ballet Rehearsals — The Unseen Reality</p>
-                <ul>
-                    <li>Degas fascinated by discipline and labor of dancers</li>
-                    <li>Shows exhaustion, not glamour</li>
-                    <li>Exposes the rigorous training behind performance</li>
-                    <li>Championed "ordinary" subjects in fine art</li>
-                </ul>
-                <p class="footnote">* Unlike romanticized portrayals, Degas revealed the athlete's dedication.</p>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 7: Personal Interpretation -->
-        <div class="slide bg-interpretation" data-slide="7">
-            <div class="slide-content">
-                <h3>06</h3>
-                <h2>Personal Interpretation</h2>
-                <p class="highlight">Emotional Response</p>
-                <ul>
-                    <li>The dim lighting evokes quiet contemplation</li>
-                    <li>Subtle melancholy beneath apparent industriousness</li>
-                    <li>I sense respect for these young artists' commitment</li>
-                    <li>The painting invites reflection on unseen effort</li>
-                </ul>
-            </div>
-            <div class="slide-overlay"></div>
-        </div>
-
-        <!-- Slide 8: Conclusion -->
-        <div class="slide slide-section bg-conclusion" data-slide="8">
-            <div class="slide-content">
-                <h3>07</h3>
-                <h2>Conclusion</h2>
-                <p class="highlight">Degas's Enduring Legacy</p>
-                <ul>
-                    <li>Pioneered observation of modern urban life</li>
-                    <li>Influenced 20th-century photography and cinema</li>
-                    <li>Changed how motion could be depicted in painting</li>
-                    <li>His honest approach inspired countless artists</li>
-                </ul>
-                <p class="footnote" style="margin-top: 30px;">Edgar Degas transformed art by finding beauty in everyday dedication.</p>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="nav-dots">
-            <div class="nav-dot active" data-goto="1"></div>
-            <div class="nav-dot" data-goto="2"></div>
-            <div class="nav-dot" data-goto="3"></div>
-            <div class="nav-dot" data-goto="4"></div>
-            <div class="nav-dot" data-goto="5"></div>
-            <div class="nav-dot" data-goto="6"></div>
-            <div class="nav-dot" data-goto="7"></div>
-            <div class="nav-dot" data-goto="8"></div>
-        </div>
-
-        <div class="nav-arrows">
-            <button class="nav-arrow" id="prevBtn">←</button>
-            <button class="nav-arrow" id="nextBtn">→</button>
-        </div>
-
-        <div class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+<!-- HEADER -->
+<header class="header">
+    <div class="header-brand">
+        <div class="brand-icon"><i class="fas fa-mosque"></i></div>
+        <div class="brand-text">
+            <h1>Sunnah Path</h1>
+            <p>Following the Way of the Prophet ﷺ</p>
         </div>
     </div>
+    <div class="header-stats">
+        <div class="stat-pill"><i class="fas fa-book-open"></i> <span id="totalCount">0</span> Practices</div>
+        <div class="stat-pill"><i class="fas fa-star"></i> Daily Guide</div>
+    </div>
+</header>
 
-    <script>
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.nav-dot');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const currentSlideEl = document.getElementById('currentSlide');
-        const totalSlidesEl = document.getElementById('totalSlides');
+<!-- VOICE BANNER (shown if no Arabic voice) -->
+<div id="voiceBanner">
+    <div class="voice-note">
+        <i class="fas fa-info-circle"></i>
+        <span id="voiceBannerText">Loading voice status…</span>
+    </div>
+</div>
 
-        let currentSlide = 1;
-        const totalSlides = slides.length;
+<!-- SEARCH -->
+<div class="search-wrap">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search sunnah practices or duas…" autocomplete="off">
+        <button id="clearSearch" title="Clear"><i class="fas fa-times"></i></button>
+    </div>
+</div>
 
-        totalSlidesEl.textContent = totalSlides;
+<!-- CATEGORIES -->
+<div class="cats-wrap" id="catsContainer"></div>
 
-        function showSlide(n) {
-            if (n < 1) n = totalSlides;
-            if (n > totalSlides) n = 1;
+<!-- GRID -->
+<div class="grid-wrap" id="sunnahGrid"></div>
 
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
+<!-- QUOTE -->
+<div class="quote-bar">
+    <div class="quote-inner">
+        <div class="qi"><i class="fas fa-quote-right"></i></div>
+        <p>"Indeed, in the Messenger of Allah you have an excellent example for whoever has hope in Allah and the Last Day."</p>
+        <small>— Qur'an 33:21</small>
+    </div>
+</div>
 
-            document.querySelector(`[data-slide="${n}"]`).classList.add('active');
-            dots[n - 1].classList.add('active');
+<!-- TOAST -->
+<div id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
 
-            currentSlide = n;
-            currentSlideEl.textContent = n;
+<!-- NOW PLAYING -->
+<div id="nowPlaying">
+    <div class="pulse"></div>
+    <span id="npText">Playing…</span>
+    <button class="stop-now" onclick="stopAll()" title="Stop"><i class="fas fa-times"></i></button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════ */
+const SUNNAH = [
+    {
+        id:1, category:"Morning",
+        title:"Upon Waking Up",
+        desc:"Wipe away sleep with your hand over your face, then praise Allah. This Sunnah grounds the heart in gratitude before the day begins.",
+        arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+        trans:"All praise is for Allah who gave us life after having taken it from us, and unto Him is the resurrection.",
+        reward:"Begins the day with gratitude and remembrance of Allah"
+    },
+    {
+        id:2, category:"Morning",
+        title:"Using the Miswak",
+        desc:"Use the miswak (tooth stick) upon waking and before wudu. The Prophet ﷺ said: 'If it were not for the difficulty it would impose, I would have ordered the miswak before every prayer.'",
+        arabic:"اللَّهُمَّ بَيِّضْ بِهِ أَسْنَانِي وَثَبِّتْ بِهِ لِثَاتِي",
+        trans:"O Allah, whiten my teeth with it and strengthen my gums.",
+        reward:"Purifies the mouth and immensely pleases Allah"
+    },
+    {
+        id:3, category:"Prayer",
+        title:"Entering the Mosque",
+        desc:"Step in with your right foot first and send salutations upon the Prophet ﷺ, then recite this supplication.",
+        arabic:"اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+        trans:"O Allah, open for me the doors of Your mercy.",
+        reward:"Angels send blessings upon you while in the mosque"
+    },
+    {
+        id:4, category:"Prayer",
+        title:"Leaving the Mosque",
+        desc:"Leave with your left foot first, sending salutations upon the Prophet ﷺ, then ask from Allah's bounty.",
+        arabic:"اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+        trans:"O Allah, I ask You of Your bounty.",
+        reward:"Continued seeking of Allah's blessings throughout the day"
+    },
+    {
+        id:5, category:"Eating & Drinking",
+        title:"Before Eating",
+        desc:"Always say Bismillah before eating, using the right hand and eating from what is nearest to you. If you forget, say 'Bismillah awwalahu wa akhirahu.'",
+        arabic:"بِسْمِ اللَّهِ",
+        trans:"In the name of Allah.",
+        reward:"Blesses the food and prevents Shaytan from partaking"
+    },
+    {
+        id:6, category:"Eating & Drinking",
+        title:"After Eating",
+        desc:"Praise Allah after completing your meal. This dua carries a tremendous reward mentioned explicitly by the Prophet ﷺ.",
+        arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+        trans:"All praise is for Allah who fed me this and provided it without any might or power from myself.",
+        reward:"Past sins are forgiven"
+    },
+    {
+        id:7, category:"Sleeping",
+        title:"Before Sleeping",
+        desc:"Perform wudu, dust the bed three times with the hem of your garment, and sleep on your right side facing the Qiblah.",
+        arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+        trans:"In Your name, O Allah, I die and I live.",
+        reward:"Dies upon remembrance of Allah — a blessed end to each day"
+    },
+    {
+        id:8, category:"Sleeping",
+        title:"Upon Waking at Night",
+        desc:"When waking during the night, recite this powerful supplication then make any dua — it will be answered.",
+        arabic:"لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+        trans:"There is no god but Allah alone, without partner. His is the sovereignty and His is the praise, and He is over all things competent.",
+        reward:"Dua is answered and sins forgiven"
+    },
+    {
+        id:9, category:"Travel",
+        title:"Starting a Journey",
+        desc:"When mounting or boarding a vehicle, say 'Bismillah' three times, then 'Alhamdulillah', then recite this verse of Qur'an.",
+        arabic:"سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+        trans:"Glory be to the One who has subjected this to us, for we could not have done it by ourselves, and surely to our Lord we will return.",
+        reward:"Protected and accompanied by angels throughout the journey"
+    },
+    {
+        id:10, category:"Home",
+        title:"Entering the Home",
+        desc:"Greet your family with salam, mention the name of Allah upon entering, and recite this comprehensive supplication.",
+        arabic:"اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ الْمَوْلَجِ وَخَيْرَ الْمَخْرَجِ بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا",
+        trans:"O Allah, I ask You for the best of entering and the best of exiting. In the name of Allah we enter, and in the name of Allah we leave, and upon our Lord we rely.",
+        reward:"Shaytan is prevented from entering the home with you"
+    },
+    {
+        id:11, category:"Clothing",
+        title:"Wearing New Clothes",
+        desc:"When putting on a new garment, name it and praise Allah, asking for the good it brings.",
+        arabic:"اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ كَسَوْتَنِيهِ أَسْأَلُكَ خَيْرَهُ وَخَيْرَ مَا صُنِعَ لَهُ وَأَعُوذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا صُنِعَ لَهُ",
+        trans:"O Allah, praise be to You. You clothed me. I ask for its goodness and refuge from its evil.",
+        reward:"Continuous blessings and protection"
+    },
+    {
+        id:12, category:"Daily Etiquette",
+        title:"When Sneezing",
+        desc:"Say Alhamdulillah after sneezing. The one who hears should reply 'Yarhamuk Allah', and the sneezer responds 'Yahdikumu Allah wa yuslihu balakum.'",
+        arabic:"الْحَمْدُ لِلَّهِ",
+        trans:"All praise is for Allah.",
+        reward:"The Muslim who sneezes and praises Allah is shown mercy"
+    },
+    {
+        id:13, category:"Morning",
+        title:"Morning Adhkar (After Fajr)",
+        desc:"After Fajr prayer, sit in your place of prayer and recite this supplication, seeking protection for the entire day.",
+        arabic:"اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
+        trans:"O Allah, You are my Lord, there is no god but You. You created me and I am Your slave, and I am faithful to my covenant and my promise to You as much as I can.",
+        reward:"Whoever says this in the morning and dies that day enters Paradise"
+    },
+    {
+        id:14, category:"Daily Etiquette",
+        title:"Replying to the Adhan",
+        desc:"When you hear the call to prayer, repeat every phrase after the muadhin, then send salawat upon the Prophet ﷺ.",
+        arabic:"اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ",
+        trans:"O Allah, Lord of this perfect call and the prayer to be offered, grant Muhammad the intercession and the privilege.",
+        reward:"Intercession of the Prophet ﷺ on the Day of Judgment"
+    }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   SPEECH ENGINE — Robust Arabic + English TTS
+═══════════════════════════════════════════════════════════ */
+let synth = window.speechSynthesis;
+let currentBtn = null;
+let arabicVoice = null;
+let englishVoice = null;
+let voicesLoaded = false;
+
+function loadVoices() {
+    const voices = synth.getVoices();
+    if (!voices.length) return;
+    voicesLoaded = true;
+
+    // Priority order for Arabic voices
+    const arPriority = ['ar-SA','ar-EG','ar-AE','ar-KW','ar-MA','ar'];
+    for (const lang of arPriority) {
+        const v = voices.find(v => v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+        if (v) { arabicVoice = v; break; }
+    }
+    // Fallback: any voice with 'arab' in name
+    if (!arabicVoice) {
+        arabicVoice = voices.find(v => v.name.toLowerCase().includes('arab') || v.name.toLowerCase().includes('مريم'));
+    }
+
+    // English voice
+    englishVoice = voices.find(v => v.lang === 'en-US' && v.localService) ||
+                   voices.find(v => v.lang.startsWith('en'));
+
+    // Show banner
+    const banner = document.getElementById('voiceBanner');
+    const bannerText = document.getElementById('voiceBannerText');
+    if (arabicVoice) {
+        banner.style.display = 'none';
+    } else {
+        banner.style.display = 'block';
+        bannerText.innerHTML = `<strong>Arabic voice not found on this device.</strong> The "Recite" button will spell out transliteration instead. For Arabic audio, enable an Arabic language pack in your device/browser settings.`;
+    }
+}
+
+// Voices load async — try immediately and on event
+if (synth) {
+    loadVoices();
+    synth.onvoiceschanged = loadVoices;
+    // Some browsers need a small delay
+    setTimeout(loadVoices, 500);
+    setTimeout(loadVoices, 1500);
+}
+
+function stopAll() {
+    if (synth) synth.cancel();
+    if (currentBtn) { resetBtn(currentBtn); currentBtn = null; }
+    document.getElementById('nowPlaying').style.display = 'none';
+}
+
+function resetBtn(btn) {
+    btn.classList.remove('playing');
+    const icon = btn.querySelector('i');
+    if (icon) { icon.className = btn.dataset.iconClass || 'fas fa-volume-up'; icon.classList.remove('spin'); }
+}
+
+function speak(text, lang, btn, label) {
+    if (!synth) { showToast('Speech not supported in this browser'); return; }
+
+    // If already playing this button → stop
+    if (currentBtn === btn) { stopAll(); return; }
+
+    stopAll();
+
+    const utt = new SpeechSynthesisUtterance(text);
+
+    if (lang === 'ar') {
+        if (arabicVoice) {
+            utt.voice = arabicVoice;
+            utt.lang  = arabicVoice.lang;
+        } else {
+            // No Arabic voice: fall back to transliteration spoken in English
+            // We don't just silently fail — we show a toast and speak fallback
+            showToast('No Arabic voice — playing transliteration');
+            const fallback = btn.closest('.dua-box')?.querySelector('.dua-trans')?.textContent || text;
+            speak(fallback, 'en', btn, label);
+            return;
         }
+        utt.rate  = 0.82;
+        utt.pitch = 1.05;
+    } else {
+        if (englishVoice) utt.voice = englishVoice;
+        utt.lang  = 'en-US';
+        utt.rate  = 0.92;
+        utt.pitch = 1;
+    }
 
-        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
-        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    utt.onstart = () => {
+        currentBtn = btn;
+        btn.classList.add('playing');
+        const icon = btn.querySelector('i');
+        if (icon) { btn.dataset.iconClass = icon.className; icon.className = 'fas fa-circle-notch spin'; }
+        const np = document.getElementById('nowPlaying');
+        document.getElementById('npText').textContent = label || 'Playing…';
+        np.style.display = 'flex';
+    };
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                showSlide(parseInt(dot.dataset.goto));
-            });
+    const onDone = () => {
+        if (currentBtn === btn) { resetBtn(btn); currentBtn = null; }
+        document.getElementById('nowPlaying').style.display = 'none';
+    };
+    utt.onend   = onDone;
+    utt.onerror = (e) => {
+        onDone();
+        if (e.error !== 'interrupted') showToast('Audio error — try again');
+    };
+
+    synth.speak(utt);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════════════ */
+let toastTimer;
+function showToast(msg) {
+    clearTimeout(toastTimer);
+    document.getElementById('toastMsg').textContent = msg;
+    const t = document.getElementById('toast');
+    t.style.display = 'flex';
+    toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2600);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REMINDERS
+═══════════════════════════════════════════════════════════ */
+function setReminder(title) {
+    showToast('Reminder set for: ' + title);
+    if (Notification.permission === 'granted') {
+        new Notification('Sunnah Reminder: ' + title, {
+            body: 'May Allah bless your commitment to the Sunnah.',
         });
+    } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission();
+    }
+}
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                showSlide(currentSlide + 1);
-            } else if (e.key === 'ArrowLeft') {
-                showSlide(currentSlide - 1);
-            }
-        });
+/* ═══════════════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════════════ */
+const CAT_ICONS = {
+    'All':'fa-list', 'Morning':'fa-sun', 'Prayer':'fa-mosque',
+    'Eating & Drinking':'fa-utensils', 'Sleeping':'fa-bed',
+    'Travel':'fa-plane', 'Home':'fa-home', 'Clothing':'fa-shirt',
+    'Daily Etiquette':'fa-hands', 'Sneezing':'fa-wind'
+};
 
-        // Touch swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
+function catIcon(c) { return CAT_ICONS[c] || 'fa-book'; }
 
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
+function initCats() {
+    const cats = ['All', ...new Set(SUNNAH.map(s => s.category))];
+    const el = document.getElementById('catsContainer');
+    el.innerHTML = cats.map((c, i) => `
+        <button class="cat-btn${i===0?' active':''}" data-cat="${c}">
+            <i class="fas ${catIcon(c)}"></i>${c}
+        </button>`).join('');
+    el.querySelectorAll('.cat-btn').forEach(b => b.addEventListener('click', () => {
+        el.querySelectorAll('.cat-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        render();
+    }));
+}
 
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) {
-                showSlide(currentSlide + 1);
-            } else if (touchEndX - touchStartX > 50) {
-                showSlide(currentSlide - 1);
-            }
-        });
-    </script>
+function getFiltered() {
+    const cat   = document.querySelector('.cat-btn.active')?.dataset.cat || 'All';
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    return SUNNAH.filter(s => {
+        const matchCat = cat === 'All' || s.category === cat;
+        const matchQ   = !query ||
+            s.title.toLowerCase().includes(query) ||
+            s.desc.toLowerCase().includes(query)  ||
+            s.trans.toLowerCase().includes(query) ||
+            s.arabic.includes(query);
+        return matchCat && matchQ;
+    });
+}
+
+function render() {
+    const items = getFiltered();
+    const grid  = document.getElementById('sunnahGrid');
+
+    if (!items.length) {
+        grid.innerHTML = `<div class="empty">
+            <i class="fas fa-search"></i>
+            <p>No practices found</p>
+            <small>Try a different search term or category</small>
+        </div>`;
+        return;
+    }
+
+    grid.innerHTML = items.map(s => `
+        <div class="card" data-id="${s.id}">
+            <div class="card-top">
+                <span class="cat-tag"><i class="fas ${catIcon(s.category)}"></i>${s.category}</span>
+                <div class="card-actions">
+                    <button class="icon-btn" onclick="setReminder('${esc(s.title)}')" title="Set Reminder">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="icon-btn" onclick="speak('${esc(s.title)}. ${esc(s.desc)}','en',this,'📖 Reading description…')" title="Read description">
+                        <i class="fas fa-headphones"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-title">${s.title}</div>
+            <div class="card-desc">${s.desc}</div>
+            <div class="dua-box">
+                <div class="dua-arabic">${s.arabic}</div>
+                <div class="dua-trans">${s.trans}</div>
+                <div class="dua-btns">
+                    <button class="dua-btn" onclick="speak('${esc(s.arabic)}','ar',this,'🕌 Reciting Arabic dua…')" title="Recite Arabic">
+                        <i class="fas fa-volume-up"></i> Recite (Arabic)
+                    </button>
+                    <button class="dua-btn" onclick="speak('${esc(s.trans)}','en',this,'📖 Translation…')" title="Read translation">
+                        <i class="fas fa-language"></i> Translation
+                    </button>
+                    <button class="dua-btn" onclick="copyText('${esc(s.arabic)}\\n${esc(s.trans)}')" title="Copy dua">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            ${s.reward ? `<div class="card-reward"><i class="fas fa-star"></i>${s.reward}</div>` : ''}
+        </div>
+    `).join('');
+}
+
+// Safe escape for inline event strings
+function esc(str) {
+    return str.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+}
+
+function copyText(text) {
+    const decoded = text.replace(/\\n/g, '\n').replace(/\\'/g,"'");
+    navigator.clipboard.writeText(decoded)
+        .then(() => showToast('Dua copied to clipboard ✓'))
+        .catch(() => showToast('Copy failed'));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+document.getElementById('totalCount').textContent = SUNNAH.length;
+initCats();
+render();
+
+const searchInput = document.getElementById('searchInput');
+const clearBtn    = document.getElementById('clearSearch');
+
+searchInput.addEventListener('input', () => {
+    clearBtn.style.display = searchInput.value ? 'block' : 'none';
+    render();
+});
+clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    render();
+});
+
+// Request notification permission after 2s
+setTimeout(() => {
+    if (Notification.permission === 'default') Notification.requestPermission();
+}, 2000);
+
+// Expose globals for inline handlers
+window.speak       = speak;
+window.stopAll     = stopAll;
+window.setReminder = setReminder;
+window.copyText    = copyText;
+</script>
 </body>
 </html>
